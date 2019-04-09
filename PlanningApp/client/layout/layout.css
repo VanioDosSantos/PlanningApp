@@ -1,0 +1,294 @@
+/* Hex Colors
+ * #252525 Header Font
+ * #666666 Font Color / Neutral Color [?]
+ * #fe5a5a Accent Color / Icon Ouline Color
+ * # Icon Fill Color
+ * #acacac Font Hover Color / Other Minor Font / Neutral Color [?]
+ * #e6e6e6 Event Page Borders
+ * #4D5656 Side Nav Color
+ * #f0f0f0 Site Background Color / Border Color
+ * #ffffff Nav Color
+ * #999999 Shadow Color
+ * #e61610 Urgent Color
+ * #0c59cf Important Color
+ * #
+ */
+
+* {
+    font-family: Arial Rounded MT Bold;
+    margin: 0;
+}
+html, body {
+    background-color: #f0f0f0;
+    margin: 0 auto;
+    height: 100%;
+
+    /* need to change for only when user is logged in (maybe when user logs in OR depending on the route OR simply if there is a current user) */
+    overflow-y: hidden;
+}
+a {
+    text-decoration: none;
+    color: #666666;
+}
+a:hover {
+    text-decoration: none;
+    color: #acacac;
+}
+a:focus {
+  color: #666666;
+  text-decoration: none;
+}
+.css-layout-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /*background-color: orange;*/
+}
+.css-alert {
+  text-align: center;
+}
+
+/* main navigation */
+
+.css-nav {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 45px;
+    background-color: #ffffff;
+    list-style-type: none;
+    border-bottom: 1px solid #f0f0f0;
+    display: table;
+    z-index: 9;
+    /*text-align: center;*/
+}
+.css-more {
+    padding: 9.5px 0px 9.5px 0px;
+    /*background-color: green;*/
+}
+.css-more span {
+    margin-left: 12px;
+    font-size: 20px;
+    color: #acacac;
+}
+.css-logo {
+    color: #fe5a5a;
+    font-size: 30px;
+    padding: 0px 0px 2px 0px;
+    text-align: center;
+    /*background-color: orange;*/
+}
+.css-logo a {
+    text-decoration: none;
+    color: #fe5a5a;
+    /*font-family: Sukhumvit Set;*/
+    /*font-size: 5px;*/
+}
+.css-logo a:hover {
+    text-decoration: none;
+}
+.css-live-user {
+    padding: 12px 0px 12px 0px;
+    /*background-color: purple;*/
+}
+.css-live-user .css-notify {
+    position: relative;
+    float: left;
+    margin-left: 40px;
+}
+.css-notify-dropdown {
+  position: absolute;
+  width: 350px;
+  left: -150px;
+  border: 1px solid #fe5a5a;
+  overflow-y: scroll;
+  white-space: nowrap;
+  max-height: 500px;
+}
+.badge {
+  left: 25px !important;
+}
+.css-notification-header {
+  margin-left: 20px;
+  margin-top: 5px;
+  color: #666666;
+}
+.css-clear-all {
+  font-size: 12px;
+  margin-right: 20px;
+  margin-top: 3px;
+  color: #acacac;
+}
+.css-notification-btn {
+  text-align: right;
+  margin-right: 10px;
+}
+.css-notification-btn input {
+  padding: 0px !important;
+  margin-right: 10px;
+  width: 70px;
+}
+.css-live-user .css-username {
+    position: relative;
+    float: right;
+    margin-right: 30px;
+    color: #fe5a5a;
+}
+.dropdown {
+    position: relative;
+    float: right;
+    /*background-color: blue;*/
+}
+.css-login-link {
+    padding: 12px 0px 12px 0px;
+    /*background-color: red;*/
+}
+.css-login-link a {
+    position: relative;
+    float: right;
+    margin-right: 30px;
+    color: #666666;
+}
+
+/* side navigation */
+
+.css-side-nav {
+    position: absolute;
+    height: 100%;
+    width: 100px;
+    background-color: #4D5656;
+    z-index: 8;
+    overflow: hidden;
+    box-shadow: 3px 0px 6px #999999;
+    transition: 0.4s width ease-in-out;
+}
+.css-side-nav:hover {
+    width: 125px;
+}
+.css-stacked-nav {
+    position: relative;
+    margin: auto;
+    height: auto;
+    width: auto;
+    /*background-color: orange;*/
+}
+.css-stacked-nav a li {
+    position: relative;
+    text-align: center;
+    padding-top: 10px;
+    color: #ffffff;
+    font-size: 12px;
+}
+.css-stacked-nav a span {
+    /*color: #ffffff;*/
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 25px;
+    /*background-color: green;*/
+}
+.css-stacked-nav img {
+    padding-bottom: 10px;
+}
+.css-side-nav-highlight {
+  color: #fe5a5a !important;
+}
+
+/* yield container */
+
+.css-container-fluid {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow-x: hidden;
+    /*background-color: purple;*/
+}
+
+/* modal */
+.css-select-container {
+    width: 90%;
+}
+.css-modal-select {
+    border: 0px;
+    box-shadow: none;
+    font-size: 20px;
+}
+.css-modal-select:focus {
+    box-shadow: none;
+}
+.modal-content form {
+    position: relative;
+    margin: auto;
+    width: 90%;
+    /*background-color: blue;*/
+}
+textarea {
+    resize: none;
+}
+.css-add-new-task-input {
+  position: relative;
+  width: 100%;
+}
+.css-add-new-task-input-container {
+  position: relative;
+  margin: auto;
+  width: 50%;
+  /*background-color: purple;*/
+}
+.css-input-new-task {
+  position: relative;
+  margin-top: 10px;
+}
+
+/* map */
+.css-task-origin {
+  visibility: hidden;
+  position: absolute;
+}
+.css-task-dest-coor{
+  visibility: hidden;
+  position: absolute;
+}
+.map-container {
+  position: relative;
+  width: 800px;
+  max-width: 100%;
+  height: 300px;
+  margin-top: 15px;
+}
+.map-canvas {
+  border-radius: 5px;
+}
+#dvDistance {
+  margin: 10px;
+}
+.pac-container {
+    z-index: 1051 !important;
+}
+.css-submit-location {
+  width: 100%;
+}
+.css-entry-more {
+  text-align: center;
+}
+.css-entry-more span {
+  vertical-align: top;
+}
+
+/* alert */
+.css-alert {
+  position: relative;
+  z-index: 99999;
+}
+
+/* loading */
+.css-loading {
+  position: relative;
+  display: block;
+  margin: auto;
+  text-align: center;
+  color: #fe5a5a;
+  top: 200px;
+  font-family: Arial Rounded MT Bold;
+}

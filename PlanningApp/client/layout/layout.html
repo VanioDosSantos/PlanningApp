@@ -1,0 +1,831 @@
+<template name="layout">
+
+	{{#if currentUser}}
+
+	<div class="css-layout-body">
+
+		<div class="css-nav row">
+			<div class="css-more col-sm-4">
+				<!-- <a href="#"><span class="js-more-btn glyphicon glyphicon-th" onclick="sidenavSlide()"></span></a> -->
+			</div>
+			<div class="css-logo col-sm-4">
+				<a href="{{pathFor 'upcoming'}}">Epoch</a>
+			</div>
+			<div class="css-live-user col-sm-4">
+
+				<!-- <a class="css-notify" href="#">[N]</a> -->
+				<div class="css-notify dropdown">
+					<a class=" dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <img src="/images/size32.png" style="width: 16px;"/> <span class="badge"> {{notificationNum}} </span></a>
+					<ul class="css-notify-dropdown dropdown-menu" aria-labelledby="dropdownMenu1">
+						{{#if notifications}}
+							<li class="css-notification-header">Notifications: <span class="css-clear-all pull-right"><a href="#">Clear all</a></span></li>
+							{{#each notifications}}
+								{{#if title}}
+									<li role="separator" class="divider"></li>
+									<li>
+										<a href="#"> {{title}} </a>
+										<div class="css-notification-btn">
+											<input class="js-notifications-done btn" type="button" value="Done">
+										</div>
+									</li>
+								{{/if}}
+								{{#if notification}}
+									<li role="separator" class="divider"></li>
+									<li>
+										<a href="#"> {{notification}}</a>
+										<div class="css-notification-btn">
+											<input class="js-accept-request btn" type="button" value="Accept">
+											<input class="js-deny-request btn" type="button" value="Deny">
+										</div>
+									</li>
+								{{/if}}
+							{{/each}}
+						{{else}}
+							<li><a href="#"> Nothing here. </a></li>
+						{{/if}}
+						<br>
+					</ul>
+				</div>
+
+				<div role="presentation" class="dropdown">
+					<a class="css-username dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> {{userName.profile.first}} {{userName.profile.last}} <span class="caret"></span> </a>
+					<ul class="dropdown-menu">
+						<li><a href="{{pathFor 'events'}}">Events</a></li>
+						<li><a href="{{pathFor 'upcoming'}}">Upcoming</a></li>
+						<li><a href="{{pathFor 'calendar'}}">Calendar</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="{{pathFor 'settings'}}">Settings</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="js-logout"><a href="#">Logout</a></li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+
+		<span class="css-alert"> {{> sAlert}} </span>
+
+		<div class="css-side-nav">
+
+			<ul class="css-stacked-nav nav nav-pills nav-stacked">
+				<a id="mapTrigger" class="js-modal" data-toggle="modal" data-target=".bd-example-modal-lg" href="#">
+					<li>
+						<span class="glyphicon glyphicon-plus"></span>
+						<p>New Entry</p>
+					</li>
+				</a>
+				<a href="{{pathFor 'upcoming'}}">
+					<li class="css-sidenav-upcoming {{highlight 'upcoming'}}">
+						<span class="glyphicon glyphicon-th-list"></span>
+						<p> Upcoming </p>
+					</li>
+				</a>
+				<a href="{{pathFor 'events'}}">
+					<li class="css-sidenav-events {{highlight 'events'}}">
+						<span class="glyphicon glyphicon-th-large"></span>
+						<p> Events </p>
+					</li>
+				</a>
+				<a href="{{pathFor 'calendar'}}">
+					<li class="css-sidenav-calendar {{highlight 'calendar'}}">
+						<span class="glyphicon glyphicon-calendar"></span>
+						<p>Calendar</p>
+					</li>
+				</a>
+				<a href="#">
+					<li class="css-sidenav-search {{highlight 'search'}}">
+						<span class="glyphicon glyphicon-search"></span>
+						<p>Search</p>
+					</li>
+				</a>
+				<a href="#">
+					<li class="css-sidenav-speech">
+						<button id="rec" class="css-rec btn">Speak</button>
+					</li>
+				</a>
+			</ul>
+
+			<!-- <div class="container">
+				<input id="speech" type="text">
+				<button id="rec" class="css-rec btn">Speak</button>
+				<div id="spokenResponse" class="spoken-response">
+				<div class="spoken-response__text"></div>
+			</div> -->
+		</div>
+
+		<!-- </div> -->
+		<div class="css-container-fluid">
+			<!-- where other templates will be rendered -->
+			{{> yield}} {{> modal}}
+			<!-- end -->
+		</div>
+
+	</div>
+
+
+	{{else}}
+
+	<div class="css-nav row">
+		<div class="css-more col-sm-4"></div>
+		<div class="css-logo col-sm-4">
+			<a href="{{pathFor 'home'}}">Epoch</a>
+		</div>
+		<div class="css-login-link col-sm-4">
+			<a href="{{pathFor 'login'}}">Login</a>
+		</div>
+	</div>
+
+	<!-- where other templates will be rendered -->
+	{{> yield}}
+	<!-- end -->
+
+	{{/if}}
+
+</template>
+
+<template name="modal">
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="userModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					<h3 class="modal-title" id="myModalLabel">
+						<div class="css-select-container dropdown pull-left">
+							<div role="presentation">
+								<select id="entryType" class="css-modal-select js-modal-select form-control">
+									<option value="task"><a href="#">Task</a></option>
+									<option value="goal"><a href="#">Goal</a></option>
+									<option value="text"><a href="#">Text</a></option>
+								</select>
+							</div>
+						</div>
+					</h3>
+				</div>
+
+				<!-- task view -->
+				{{# if taskChosen}}
+				<form class="js-new-task" action="layout.html" method="post">
+					<br>
+					<div class="input-group">
+					  <input type="text" class="js-task-title form-control" id="task-title" placeholder="Title" aria-describedby="basic-addon2">
+					  <span class="input-group-addon" id="basic-addon2">T</span>
+					</div>
+					<!-- <br> -->
+					<div class="row">
+						<div class="col-sm-6">
+							<h5>Reminder</h5>
+							<div class="css-date-time form-group">
+								<div class='input-group date' id='datetimepicker5'>
+									<input type='text' class="js-task-date form-control" placeholder="Date & Time"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+						<!-- </div> -->
+						<script type="text/javascript">
+							$(function() {
+								$('#datetimepicker5').datetimepicker({
+									minDate: new Date()
+								});
+							});
+						</script>
+						<br>
+						<div class="css-task-origin">
+							<b>Start Location: </b>
+							<input id="start" class="js-task-origin form-control" type="text" placeholder="Start">
+						</div>
+							<!-- <b>Destination: </b> -->
+							<div class="input-group">
+							  <input type="text" class="css-task-destination js-task-destination form-control" id="end" placeholder="Task location" aria-describedby="basic-addon2">
+							  <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-map-marker"></span></span>
+							</div>
+
+							<div class="css-task-dest-coor">
+								<input id="dvCoorLat" class="js-dest-coor form-control" type="text" placeholder="Coordinates">
+								<input id="dvCoorLng" class="js-dest-coor form-control" type="text" placeholder="Coordinates">
+
+							</div>
+							<div id="dvDistance"></div>
+							<input class="css-submit-location js-submit-location btn" type="submit" value="Get Path">
+							<br>
+							<br>
+							<span><input class="js-task-goal" id="js-task-checkbox" type="checkbox"> Make task a part of a Goal.</span>
+							<br>
+							<br>
+							{{#if checked}}
+								{{#if userGoals}}
+									<select class="css-part-of-goal form-control">
+										{{#each userGoals}}
+										<option value="{{title}}">{{title}}</option>
+										{{/each}}
+									</select>
+								{{else}}
+										<h5>It's lonely here, we all have goals.</h5>
+								{{/if}}
+								<br>
+							{{/if}}
+							<h5>Priority</h5>
+							<select class="css-select-task-priority js-select-task-priority form-control">
+								<!-- the html in the values must be removed because i might be hackable -->
+								<option value="<span style='color: #666666'>Neutral</span>">Neutral</option>
+								<option value="<span style='color: #0c59cf'>Important</span>">Important</option>
+								<option value="<span style='color: #e61610'>Urgent</span>">Urgent</option>
+							</select>
+
+							<div id="x"> </div>
+
+						</div>
+						<div class="col-sm-6">
+							<h5>Category:</h5>
+							<div class="css-select-category">
+								<select class="js-select-category form-control">
+									{{#each selectCategory}}
+									<option value="{{name}}">{{name}}</option>
+									{{/each}}
+								</select>
+							</div>
+							<br>
+							<!-- {{#if map}} -->
+							<div class="map-container">
+								{{> googleMap name="initMap" options=exampleMapOptions}}
+						</div>
+						<!-- {{/if}} -->
+						</div>
+					</div>
+
+					<br>
+					{{#if more}}
+						<h5 class="css-entry-more css-entry-more-close"><a href="#">Show less <span class="glyphicon glyphicon-chevron-up"></span></a></h5>
+					{{else}}
+						<h5 class="css-entry-more css-entry-more-open"><a href="#">Show more <span class="glyphicon glyphicon-chevron-down"></span></a></h5>
+					{{/if}}
+
+					{{#if more}}
+					<div class="row">
+						<div class="col-sm-6">
+							{{#with tags}}
+							{{#if this.length}}
+							<select class="js-select-task-tag form-control">
+								<option value="null">Select tag</option>
+								{{#each tags}}
+								<option value="{{tagName}}">{{tagName}}</option>
+								{{/each}}
+							</select>
+							{{/if}}
+							{{/with}}
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group">
+							  <input type="text" class="js-new-tag-name form-control" placeholder="New tag" aria-describedby="basic-addon2">
+							  <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
+							</div>
+							<br>
+							{{#with collaborator}}
+							{{#if collaborator}}
+							<select class="js-collaborator-select form-control">
+								<option value=""><a href="#">Select collaborator</a></option>
+								{{#each collaborator}}
+								<option value="{{collaboratorId}}"><a href="#">{{collaboratorName}}</a></option>
+								{{/each}}
+							</select>
+							{{/if}}
+							{{/with}}
+						</div>
+					</div>
+					<br>
+					<div class="input-group">
+						<textarea class="js-task-note form-control" aria-describedby="basic-addon2" style="height: 100px" placeholder="Add task description..."></textarea>
+						<span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-edit"></span></span>
+					</div>
+					{{/if}}
+
+					<br>
+				</form>
+				{{/if}}
+
+				<!-- goals view -->
+				{{# if goalChosen}}
+				<form class="js-new-goal" action="layout.html" method="post">
+					<br>
+					<div class="input-group">
+					  <input type="text" class="js-goal-title form-control" id="task-title" placeholder="Title" aria-describedby="basic-addon2">
+					  <span class="input-group-addon" id="basic-addon2">T</span>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<!-- start goal by... -->
+										<h5>Start by</h5>
+										<div class="form-group">
+											<div class='input-group date' id='datetimepicker5'>
+												<input type='text' class="js-goal-date-s form-control" placeholder="Date & Time"/>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
+										</div>
+									<script type="text/javascript">
+										$(function() {
+											$('#datetimepicker5').datetimepicker({
+												minDate: new Date()
+											});
+										});
+									</script>
+						</div>
+						<div class="col-sm-6">
+							<!-- finish goal by... -->
+										<h5>Finish by</h5>
+										<div class="form-group">
+											<div class='input-group date' id='datetimepicker6'>
+												<input type='text' class="js-goal-date-f form-control" placeholder="Date & Time"/>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
+										</div>
+									<script type="text/javascript">
+										$(function() {
+											$('#datetimepicker6').datetimepicker({
+												minDate: new Date()
+											});
+										});
+									</script>
+							</div>
+					</div>
+					<h5>Category</h5>
+					<select class="js-select-category form-control">
+						{{#each selectCategory}}
+						<option value="{{name}}">{{name}}</option>
+						{{/each}}
+					</select>
+
+					<div class="js-goal-tasks">
+						<br>
+						<div class="css-add-new-task-input-container">
+							<input class="css-add-new-task-input js-new-task-input btn" type="button" value="Add task">
+							<br>
+						</div>
+						<input class="css-input-new-task js-task-of-goal form-control" type="text" name="name" placeholder="Enter task">
+					</div>
+
+					<br>
+					<h5>Priority</h5>
+					<select class="js-select-goal-priority form-control">
+						<!-- the html in the values must be removed because i might be hackable -->
+						<option value="<span style='color: #666666'>Neutral</span>">Neutral</option>
+						<option value="<span style='color: #0c59cf'>Important</span>">Important</option>
+						<option value="<span style='color: #e61610'>Urgent</span>">Urgent</option>
+					</select>
+
+					<br>
+					{{#if more}}
+						<h5 class="css-entry-more css-entry-more-close"><a href="#">Show less <span class="glyphicon glyphicon-chevron-up"></span></a></h5>
+					{{else}}
+						<h5 class="css-entry-more css-entry-more-open"><a href="#">Show more <span class="glyphicon glyphicon-chevron-down"></span></a></h5>
+					{{/if}}
+
+					{{#if more}}
+					<div class="row">
+						<div class="col-sm-6">
+							{{#with tags}}
+							{{#if this.length}}
+							<select class="js-select-goal-tag form-control">
+								<option value="">Select tag</option>
+								{{#each tags}}
+								<option value="{{tagName}}">{{tagName}}</option>
+								{{/each}}
+							</select>
+							{{/if}}
+							{{/with}}
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group">
+							  <input type="text" class="js-new-tag-name form-control" placeholder="New tag" aria-describedby="basic-addon2">
+							  <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
+							</div>
+						</div>
+					</div>
+
+					<br>
+					<div class="input-group">
+						<textarea class="js-goal-note form-control" aria-describedby="basic-addon2" style="height: 100px" placeholder="Add task description..."></textarea>
+						<span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-edit"></span></span>
+					</div>
+					{{/if}}
+					<br>
+				</form>
+				{{/if}}
+
+				<!-- text view -->
+				{{# if textChosen}}
+				<form class="js-new-text" action="index.html" method="post">
+					<br>
+					<div class="input-group">
+					  <input type="text" class="js-text-title form-control" id="task-title" placeholder="Title" aria-describedby="basic-addon2">
+					  <span class="input-group-addon" id="basic-addon2">T</span>
+					</div>
+					<br>
+					<select class="js-select-category form-control">
+						{{#each selectCategory}}
+						<option value="{{name}}">{{name}}</option>
+						{{/each}}
+					</select>
+					<br>
+
+					<div class="row">
+						<div class="col-sm-6">
+							{{#with tags}}
+							{{#if this.length}}
+							<select class="js-select-text-tag form-control">
+								<option value="">Select tag</option>
+								{{#each tags}}
+								<option value="{{tagName}}">{{tagName}}</option>
+								{{/each}}
+							</select>
+							{{/if}}
+							{{/with}}
+						</div>
+						<div class="col-sm-6">
+							<div class="input-group">
+							  <input type="text" class="js-new-tag-name form-control" placeholder="New tag" aria-describedby="basic-addon2">
+							  <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-tags"></span></span>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="input-group">
+						<textarea class="js-text-text form-control" aria-describedby="basic-addon2" style="height: 300px" placeholder="Write as you please..."></textarea>
+						<span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-edit"></span></span>
+					</div>
+					<br>
+				</form>
+				{{/if}}
+
+
+					<div class="modal-footer">
+
+						<button class="css-rec btn2 btn pull-left">Speak</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelbutton">Cancel</button>
+						<button type="button" class="js-add-entry btn btn-primary" id="addentrybtn">Add to schedule</button>
+					</div>
+
+			</div>
+		</div>
+	</div>
+
+
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+ <script type="text/javascript">
+	 var accessToken = "f739f02cd2164ac288d09ff30730d3b8",
+		 subscriptionKey = "ab4aa0de-5fd2-49a5-8820-97a4705d7411",
+		 baseUrl = "https://api.api.ai/v1/",
+		 $speechInput,
+		 $recBtn,
+		 recognition,
+		 messageRecording = "Recording...",
+		 messageCouldntHear = "Repeat yourself",
+		 messageInternalError = "Internal server error",
+		 messageSorry = "Sorry. I don't know how to respond to that yet";
+	 $(document).ready(function() {
+		 $speechInput = $("#speech");
+		 $recBtn = $(".css-rec");
+		 $speechInput.keypress(function(event) {
+			 if (event.which == 13) {
+				 event.preventDefault();
+				 console.log("pressed it")
+
+			 }
+		 });
+		 $recBtn.on("click", function(event) {
+			 switchRecognition();
+			 console.log("clicked it.")
+		 });
+	 });
+	 function startRecognition() {
+		 recognition = new webkitSpeechRecognition();
+		 recognition.continuous = false;
+				 recognition.interimResults = false;
+		 recognition.onstart = function(event) {
+			 respond(messageRecording);
+			 updateRec();
+		 };
+		 recognition.onresult = function(event) {
+			 recognition.onend = null;
+			 //console.log("this is what we see from API-ai");
+				 //send(text);
+			 console.log(text);
+			 console.log(event.results)
+
+			 var text = "";
+				 for (var i = event.resultIndex; i < event.results.length; ++i) {
+					 text += event.results[i][0].transcript;
+				 }
+				 //Use variable text for if statements on rerouting
+				 send(text);
+				 console.log(text);
+				 $('#userModal').modal({ show: false});
+				 //For rerouting
+				 if (text.includes("event") || text.includes("events")) {
+					 $('#userModal').modal('hide');
+					 Router.go('/events');
+				 }
+				 if (text.includes("upcoming") || text.includes("what is coming up")) {
+					 $('#userModal').modal('hide');
+					 Router.go('/upcoming');
+					//  console.log(data)
+					//  if (text.includes(data.result.parameters.upcomingwhichday) == "today") {
+					// 	 console.log("tester1");
+					 //
+					//  }
+					//  if (text.includes(data.result.parameters.upcomingwhichday) == "tomorrow") {
+					// 	 console.log("tester");
+					// 	 $(".js-tomorrow-tab").trigger('click');
+					//  }
+				 }
+				 if (text.includes("settings") || text.includes("setting")) {
+					 $('#userModal').modal('hide');
+					 Router.go('/settings');
+				 }
+				 if (text.includes("calendar")) {
+					 $('#userModal').modal('hide');
+					 Router.go('/calendar');
+				 }
+
+
+				 if (text.includes("entry") || text.includes("new entry")) {
+					 $('#userModal').modal('show');
+				 }
+				 //End
+
+				 //For Entry Type in Modal
+				 if (text.includes("go") || text.includes("gold") || text.includes("goal") || text.includes("girl") ) {
+						//$('#userModal').modal('show');
+						$("#entryType").val("goal");
+						$("#entryType").trigger('change');
+				 }
+				 if (text.includes("test") || text.includes("task")) {
+						//$('#userModal').modal('show');
+						$("#entryType").val("task");
+						$("#entryType").trigger('change');
+				 }
+				 if (text.includes("note")) {
+						//$('#userModal').modal('show');
+						$("#entryType").val("text");
+						$("#entryType").trigger('change');
+						// console.log("message" + text);
+				 }
+				 //End naviagtion
+
+				//  //For Entry Type in Modal
+				//  if (text.includes("go") || text.includes("gold") || text.includes("goal") ) {
+				// 	  $('#userModal').modal('show');
+				// 	 	$("#entryType").val("goal");
+				//  }
+				//  if (text.includes("test") || text.includes("task")) {
+				// 	  $('#userModal').modal('show');
+				// 		$("#entryType").val("task");
+				//  }
+				//  if (text.includes("text")) {
+				// 	  $('#userModal').modal('show');
+				// 		$("#entryType").val("text");
+				//  }
+				//  //End
+
+				//  if (text.includes("title") && $("#entryType").val("goal")) {
+				// 	 console.log("print message");
+				// 	 $('.js-goal-title').val(text);
+				//  }
+
+				// if (text.includes("called") && $("#entryType").val("task")) {
+				// 	console.log("print message");
+				// 	//$('.js-task-title').val(text);
+				// 	console.dir(text.length);
+				// 	//var yourSpeechFromAPI = text.result.resolvedQuery;
+				// 	//console.log(data.result.resolvedQuery.substring(lastIndexOf(data.result.parameters.starttitlereco), data.result.resolvedQuery.length)
+				// 	console.log("");
+				// }
+
+			 stopRecognition();
+		 };
+		 recognition.onend = function() {
+			 respond(messageCouldntHear);
+			 stopRecognition();
+		 };
+		 recognition.lang = "en-US";
+		 recognition.start();
+	 }
+
+	 function stopRecognition() {
+		 if (recognition) {
+			 recognition.stop();
+			 recognition = null;
+		 }
+		 updateRec();
+	 }
+	 function switchRecognition() {
+		 if (recognition) {
+			 stopRecognition();
+		 } else {
+			 startRecognition();
+		 }
+	 }
+	 function updateRec() {
+		 $recBtn.text(recognition ? "Stop" : "Speak");
+	 }
+	 function send(text) {
+		 console.log("bye");
+		 $.ajax({
+			 type: "POST",
+			 url: baseUrl + "query/",
+			 contentType: "application/json; charset=utf-8",
+			 dataType: "json",
+			 headers: {
+				 "Authorization": "Bearer " + accessToken,
+				 "ocp-apim-subscription-key": subscriptionKey
+			 },
+			 data: JSON.stringify({q: text, lang: "en"}),
+			 success: function(data) {
+
+				 //For priority
+				//  if (text.includes("neutral") && $("#entryType").val("task")) {
+				// 		$(".js-select-task-priority").val("Neutral");
+				//  }
+
+				 //End Priority
+				 console.log(data);
+				 //Read off the entries in the upcoming page
+				 var speechstring = data.result.resolvedQuery;
+				 if (text.includes("what") || text.includes("what's") || text.includes("tell me") || text.includes("read me")) {
+					 console.log("entered for loop");
+					 var searchforday = data.result.parameters.upcomingwhichday;
+					 console.log(searchforday);
+					 if (searchforday = "today") {
+						 Router.go('/upcoming');
+						 console.log("tester1");
+						 $("#today-tab").trigger('click');
+					 }
+					 if (searchforday = "tomorrow") {
+						 console.log("tester");
+						 Router.go('/upcoming');
+						 $("#tomorrow-tab").trigger('click');
+					 }
+				 }
+				 //The user's speech from the data object (which I think is form API.ai)
+				 var actualspeech = data.result.resolvedQuery;
+				 if (text.includes(data.result.parameters.starttitlereco)) {
+ 					console.log("print message");
+					console.log(data);
+					//Length of the string that is the start title recognition word
+					var lengthOfTitleReco = data.result.parameters.starttitlereco.length
+					console.log(lengthOfTitleReco);
+					//index of the first letter in the starttitlereco word
+					var beginrec = actualspeech.lastIndexOf(data.result.parameters.starttitlereco)
+					//in total, it's the length of all of the words said before the actual title is grabbed
+					var final = beginrec + lengthOfTitleReco + 1
+					var finalf = (actualspeech.substring(final,actualspeech.length));
+					var finalfinal = finalf.charAt(0).toUpperCase() + finalf.substring(1,actualspeech.length)
+					//var finalfinalfinal = capitalizeFirstLetter(finalfinal)
+					console.log(finalfinal);
+					//console.log(finalfinalfinal);
+					if ($("#entryType").val = ("task") ) {
+						$('.js-task-title').val(finalfinal);
+					}
+					if ($("#entryType").val = ("goal")) {
+						$('.js-goal-title').val(finalfinal);
+					}
+					if ($("#entryType").val = ("text")) {
+						$('.js-text-title').val(finalfinal);
+					}
+					//console.log(beginrec)
+					//console.log(lets.substring(2,14))
+					//console.log(lets.substring(lastIndexOf(data.result.parameters.starttitlereco), data.result.resolvedQuery.length)
+				}
+				if (text.includes(data.result.parameters.startlocationreco)) {
+				 console.log("print location");
+				 console.log(data);
+				 //The user's speech from the data object (which I think is form API.ai)
+				 //var actualspeech = data.result.resolvedQuery;
+				 //Length of the string that is the start title recognition word
+				 var lengthOfLocaReco = data.result.parameters.startlocationreco.length
+				 console.log(lengthOfLocaReco);
+				 //index of the first letter in the starttitlereco word
+				 var startrec = actualspeech.lastIndexOf(data.result.parameters.startlocationreco)
+				 //in total, it's the length of all of the words said before the actual title is grabbed
+				 var loca = startrec + lengthOfLocaReco + 1
+				 var local = (actualspeech.substring(loca,actualspeech.length));
+				 console.log(local);
+				 var localoca = local.charAt(0).toUpperCase() + local.substring(1,actualspeech.length)
+				 //var finalfinalfinal = capitalizeFirstLetter(finalfinal)
+				 console.log(localoca);
+				 console.log("blah");
+				 //console.log(finalfinalfinal);
+				 if ($("#entryType").val = ("task") && text.includes(data.result.parameters.startlocationreco)) {
+					 console.log("yaya");
+					 $('.js-task-destination').val(localoca);
+					 $(".js-task-date").val("08/06/2016 5:00 AM");
+					 console.log("draw");
+				 }
+				 //console.log(beginrec)
+				 //console.log(lets.substring(2,14))
+				 //console.log(lets.substring(lastIndexOf(data.result.parameters.starttitlereco), data.result.resolvedQuery.length)
+			  }
+				console.log(data.result.parameters.exit);
+				//Hits the Add to Schedule button
+				if (text.includes(data.result.parameters.exit)) {
+					console.log("entered exit");
+					//var btnPress = document.getElementById("#addentrybutton");
+    			// Programmatically click the submit button
+    			$("#addentrybtn").trigger('click');
+				}
+				//Hits the cancel button in the modal
+				if (text.includes(data.result.parameters.cancelnewentry)) {
+					console.log("cancel it");
+					$("#cancelbutton").trigger('click');
+				}
+					prepareResponse(data);
+			 },
+			 error: function() {
+				 respond(messageInternalError);
+			 }
+			//  function capitalizeFirstLetter(finalfinal) {
+    	//  		return finalfinal.charAt(0).toUpperCase() + finalfinal.slice(1);
+			//  }
+		 });
+	 }
+	 function prepareResponse(val) {
+		 var debugJSON = JSON.stringify(val, undefined, 2),
+		//  console.log(degugJSON);
+			 spokenResponse = val.result.speech;
+			 //console.log("this is the val" + val);
+		 if (val.result.action == "sleepHours") {
+			 requestSleepData(val.result.parameters.sleep);
+		 } else {
+			 respond(spokenResponse);
+		 }
+		 debugRespond(debugJSON);
+	 }
+	 function debugRespond(val) {
+		 $("#response").text(val);
+	 }
+	 function respond(val) {
+		 if (val == "") {
+			 val = messageSorry;
+		 }
+		 if (val !== messageRecording) {
+			 var msg = new SpeechSynthesisUtterance();
+			 msg.voiceURI = "native";
+			 msg.text = val;
+			 msg.lang = "en-US";
+			 window.speechSynthesis.speak(msg);
+		 }
+		 $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
+	 }
+	 function requestSleepData(type) {
+		 $.ajax({
+			 type: "GET",
+			 url: "/sleep_data/",
+			 contentType: "application/json; charset=utf-8",
+			 dataType: "json",
+			 success: function(data) {
+				 //console.log("Sleep data!", data);
+				 if (data.error) {
+					 respond(data.error);
+					 window.location.replace("/login/jawbone");
+				 }
+				//  switch (type) {
+				//    case "REM sleep":
+				//      respond("You had " + toHours(data.items[0].details.rem) + " of REM sleep.");
+				//      break;
+				//    case "deep sleep":
+				//      respond("You had " + toHours(data.items[0].details.sound) + " of deep sleep.");
+				//      break;
+				//    case "light sleep":
+				//      respond("You had " + toHours(data.items[0].details.light) + " of light sleep.");
+				//      break;
+				//    case "sleep":
+				//      respond("You had " + toHours(data.items[0].details.duration) + " of sleep last night. That includes " + toHours(data.items[0].details.rem) + " of REM sleep, " + toHours(data.items[0].details.sound) + " of deep sleep and " + toHours(data.items[0].details.light) + " of light sleep.");
+				//      break;
+				//  }
+			 },
+			 error: function() {
+				 respond(messageInternalError);
+			 }
+		 });
+	 }
+	//  function toHours(secs) {
+	//    hours = Math.floor(secs / 3600),
+	//    minutes = Math.floor((secs - (hours * 3600)) / 60),
+	//    seconds = secs - (hours * 3600) - (minutes * 60);
+	//    hourText = hours + (hours > 1 ? " hours, " : " hour, ");
+	//    minuteText = minutes + (minutes > 1 ? " minutes " : " minute ");
+	//    secondText = seconds + (seconds > 1 ? " seconds" : " second");
+	//    return hourText + minuteText + "and " + secondText;
+	//  }
+ </script>
+
+</template>

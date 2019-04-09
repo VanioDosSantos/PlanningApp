@@ -1,0 +1,84 @@
+<template name="settings">
+
+  <div class="css-settings-container">
+
+    <div class="css-settings">
+      <div class="css-settings-wrap">
+        <h1><span class="glyphicon glyphicon-cog"> </span> Settings</h1>
+        <hr>
+        <form class="">
+          <h2>Email</h2>
+          <input class="form-control" type="email" placeholder="Enter email">
+          <br>
+          <input class="btn pull-right" type="button" name="name" value="Save">
+          <br>
+        </form>
+        <hr>
+        <form class="">
+          <h2>Password</h2>
+          <input class="form-control" type="password" placeholder="Enter new password">
+          <br>
+          <input class="form-control" type="password" placeholder="Confirm password">
+          <br>
+          <input class="btn pull-right" type="button" name="name" value="Save">
+          <br>
+        </form>
+        <hr>
+        <form class="">
+          <h2>Reminder</h2>
+            <h4>Distance</h4>
+            Remind me
+            <select class="js-distance-select">
+              <option value="{{reminderSets.remindDistance}}">{{reminderSets.remindDistance}}</option>
+              <option value="1">1</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+            </select>
+            km before I reach my event
+            <h4>Time</h4>
+            Remind me
+            <select class="js-time-select">
+              <option value="{{reminderSets.remindTime}}">{{reminderSets.remindTime}}</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="30">30</option>
+            </select>
+            minutes before my event
+          <br>
+          <input class="js-save-reminder-settings btn pull-right" type="button" name="name" value="Save">
+          <br>
+        </form>
+        <hr>
+        <br>
+        <form class="">
+          <h2>Collaborators</h2>
+          <input class="js-collaborator-email form-control" type="email" placeholder="Enter collaborator email">
+          <h6>Email must be exact.</h6>
+          <br>
+
+          <div class="">
+            {{#if collaborator}}
+              {{#with collaborator}}
+                {{profile.first}} {{profile.last}} <input class="css-request js-request btn" type="button" value="Send {{profile.first}} a request">
+              {{/with}}
+            {{else}}
+
+            {{/if}}
+            <!-- display existing colaborators here -->
+          </div>
+
+          <input class="js-look-collaborator btn pull-right" type="button" name="name" value="Look up">
+          <br>
+        </form>
+        <hr>
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+
+  </div>
+
+</template>

@@ -1,0 +1,200 @@
+.css-events-nav {
+  position: relative;
+  margin: 0 !important;
+  height: 40px;
+  width: 100%;
+  background-color: #ffffff;
+  /*background-color: orange;*/
+}
+.css-new-category {
+  position: relative;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  /*background-color: blue;*/
+}
+.css-new-category:hover {
+  background-color: #f4f4f4;
+}
+.css-events-nav div {
+  /*height: 100%;*/
+  /*background-color: purple;*/
+  /*padding-bottom: 3px;*/
+}
+.css-clear-all {
+  position: relative !important;
+  padding: 10px;
+  font-size: 14px !important;
+  vertical-align: bottom;
+  top: 10px;
+  right: 20px;
+}
+.css-clear-all:hover {
+  color: #fe5a5a;
+}
+.css-events-nav-dropdown {
+  position: relative;
+  /*height: auto;*/
+  padding: 10px;
+  /*height: 20px !important;
+  margin-top: 10px;
+  margin-bottom: -3px !important;*/
+  /*background-color: red;*/
+}
+.css-events-nav-tabs li a:focus {
+  background-color: transparent !important;
+}
+.css-events-nav-tabs li a {
+  margin-bottom: -2px !important;
+}
+.css-events-nav-tabs li {
+  margin-bottom: -2px !important;
+}
+.typeHighlight {
+  border-bottom: 2px solid #fe5a5a;
+}
+.css-events {
+  position: relative;
+  height: 100% !important;
+  overflow: hidden;
+  margin: 0;
+  padding: 0px;
+  /*background-color: orange;*/
+}
+.css-events-left {
+  position: relative;
+  /*height: 100%;*/
+  padding: 0px;
+  /*background-color: red;*/
+}
+.css-events-right {
+  position: relative;
+  height: 100%;
+  padding: 0px;
+  margin: 0;
+  /*width: 100%;*/
+  /*margin: 0 auto;*/
+  /*background-color: green;*/
+}
+.css-events-data {
+  position: relative;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  /*background-color: grey;*/
+}
+
+/* lack of reponsive design starts here */
+.css-category {
+  position: relative;
+  height: 100%;
+  /*padding: 0px;*/
+  /*background-color: yellow;*/
+
+}
+.css-entries {
+  position: relative;
+  height: 100%;
+  /*background-color: red;*/
+  /*padding: 0px;*/
+}
+.css-entry-detail {
+  position: relative;
+  height: 80%;
+  /*background-color: blue;*/
+  /*padding: 0px;*/
+}
+.css-category-data {
+  position: relative;
+  width: 100%;
+  height: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-right: 1px solid #e6e6e6;
+  overflow-y: scroll;
+  /*background-color: orange;*/
+}
+.css-category-data ul {
+  position: relative;
+  margin: auto;
+  list-style: none;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  /*background-color: green;*/
+}
+.css-category-data li {
+  padding: 10px;
+  border-left: 3px solid transparent;
+  /*background-color: orange;*/
+}
+.css-category-data li:hover {
+  background-color: #e6e6e6;
+  border-left: 3px solid #fe5a5a;
+}
+.css-create-category {
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+}
+.css-entries-data {
+  position: relative;
+  width: 95%;
+  height: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-right: 1px solid #e6e6e6;
+  overflow-y: scroll;
+  padding-right: 20px;
+  /*background-color: purple;*/
+}
+.css-entries-data ul {
+  position: relative;
+  margin: auto;
+  list-style: none;
+  text-align: left;
+  padding: 5px;
+  font-size: 16px;
+  /*background-color: green;*/
+}
+.css-entries-data li {
+  padding: 0px;
+  height: auto;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e6e6e6;
+  border-left: 3px solid transparent;
+  /*background-color: orange;*/
+}
+.css-tag-color {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.css-entry-detail-data {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  overflow-y: scroll;
+  padding-right: 15px;
+  /*background-color: orange;*/
+}
+.css-entry-detail-data h4 {
+  font-family: Sukhumvit Set;
+}
+.css-task-of-goal {
+  position: relative;
+  margin: auto;
+  width: 90%;
+  height: auto;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/* end */

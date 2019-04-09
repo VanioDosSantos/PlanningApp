@@ -1,0 +1,93 @@
+<template name="upcoming">
+
+	<div class="css-upcoming row">
+
+		<div class="css-upcoming-left col-sm-1"></div>
+		<div class="css-upcoming-middle col-sm-10 row">
+			<div class="css-upcoming-middle-inner col-sm-12">
+
+			<div class="css-tab-container">
+				<ul class="css-upcoming-tabs nav nav-justified">
+					<li class="js-today-tab" id="today-tab"><a href="#">Today</a></li>
+					<li class="js-tomorrow-tab" id="tomorrow-tab"><a href="#">Tomorrow</a></li>
+				</ul>
+			</div>
+
+			<div class="css-upcoming-data">
+				{{#if today}}
+					<div class="css-upcoming-data-days">
+						{{#if todoToday}}
+							{{#each todoToday}}
+
+							<a href="#">
+								<div class="css-upcoming-days">
+									<h2>{{title}}</h2>
+									<span>
+										<h4>
+											{{time}}
+										<span class="pull-right"> {{date}} </span>
+										</h4>
+									</span>
+									<span>
+										<div class="css-upcoming-tag-color" style="background-color: #{{tagColor}}"></div> {{tag}}
+										<span class="pull-right"> <h4> {{{priority}}} </h4> </span>
+									</span>
+									{{#if task}}
+										<h4>Task | <a class="js-completed" href="#" style="color: #fe5a5a;">Done</a></h4>
+									{{/if}}
+									{{#if goal}}
+										<h4>Goal | <a class="js-completed" href="#" style="color: #fe5a5a;">Done</a></h4>
+									{{/if}}
+								</div>
+							</a>
+
+							{{/each}}
+						{{else}}
+							<h3>Nothing for today.</h3>
+						{{/if}}
+					</div>
+				{{/if}}
+				{{#if tomorrow}}
+					<div class="css-upcoming-data-days">
+						{{#if todoTomorrow}}
+							{{#each todoTomorrow}}
+
+									<a href="#">
+										<div class="css-upcoming-days">
+											<h2>{{title}}</h2>
+											<span>
+												<h4>
+													{{time}}
+												<span class="pull-right"> {{date}} </span>
+												</h4>
+											</span>
+											<span>
+												<div class="css-upcoming-tag-color" style="background-color: #{{tagColor}}"></div> {{tag}}
+												<span class="pull-right"> <h4> {{{priority}}} </h4> </span>
+											</span>
+											{{#if task}}
+												<h4>Task | <a class="js-completed" href="#" style="color: #fe5a5a;">Done</a></h4>
+											{{/if}}
+											{{#if goal}}
+												<h4>Goal | <a class="js-completed" href="#" style="color: #fe5a5a;">Done</a></h4>
+											{{/if}}
+										</div>
+									</a>
+
+							{{/each}}
+						{{else}}
+							<h3>Nothing for tomorrow.</h3>
+						{{/if}}
+					</div>
+				{{/if}}
+			</div>
+
+			<!-- <br><br><br> -->
+
+		</div>
+		</div>
+		<div class="css-upcoming-right col-sm-1"></div>
+
+	</div>
+
+</template>
